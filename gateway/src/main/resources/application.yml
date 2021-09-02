@@ -1,0 +1,122 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: BankRequest
+          uri: http://localhost:8081
+          predicates:
+            - Path=/requests/** 
+        - id: BankAuthentication
+          uri: http://localhost:8082
+          predicates:
+            - Path=/auths/** 
+        - id: BankAccount
+          uri: http://localhost:8083
+          predicates:
+            - Path=/accounts/** 
+        - id: BankAccountHistory
+          uri: http://localhost:8084
+          predicates:
+            - Path=/histories/** 
+        - id: MyPage
+          uri: http://localhost:8085
+          predicates:
+            - Path=/mypages/** 
+        - id: LoanRequest
+          uri: http://localhost:8290
+          predicates:
+            - Path=/loanRequests/** 
+        - id: LoanAuthentication
+          uri: http://localhost:8291
+          predicates:
+            - Path=/loanAuths/** 
+        - id: LoanManager
+          uri: http://localhost:8292
+          predicates:
+            - Path=/loanManagers/** 
+        - id: LoanMessenger
+          uri: http://localhost:8293
+          predicates:
+            - Path=/loanMessengers/** 
+        - id: LoanStatus
+          uri: http://localhost:8294
+          predicates:
+            - Path=/loanStatus/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: BankRequest
+          uri: http://request:8080
+          predicates:
+            - Path=/requests/** 
+        - id: BankAuthentication
+          uri: http://auth:8080
+          predicates:
+            - Path=/auths/** 
+        - id: BankAccount
+          uri: http://account:8080
+          predicates:
+            - Path=/accounts/** 
+        - id: BankAccountHistory
+          uri: http://history:8080
+          predicates:
+            - Path=/histories/** 
+        - id: MyPage
+          uri: http://mypages:8080
+          predicates:
+            - Path=/mypages/** 
+        - id: LoanRequest
+          uri: http://loanRequests:8080
+          predicates:
+            - Path=/loanRequests/** 
+        - id: LoanAuthentication
+          uri: http://loanAuths:8080
+          predicates:
+            - Path=/loanAuths/** 
+        - id: LoanManager
+          uri: http://loanManagers:8080
+          predicates:
+            - Path=/loanManagers/** 
+        - id: LoanMessenger
+          uri: http://loanMessengers:8080
+          predicates:
+            - Path=/loanMessengers/** 
+        - id: LoanStatus
+          uri: http://LoanStatus:8080
+          predicates:
+            - Path=/loanStatus/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080

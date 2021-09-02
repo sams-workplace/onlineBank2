@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loanRequest
+  #navespace: mybank
+  labels:
+    app: loanRequest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loanRequest
+  template:
+    metadata:
+      labels:
+        app: loanRequest
+    spec:
+      containers:
+        - name: loanRequest
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/loanRequest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: loanRequest
+  #navespace: mybank
+  labels:
+    app: loanRequest
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: loanRequest
